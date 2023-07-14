@@ -9,7 +9,7 @@ const dbConfig = {
     password: "zobest",
     database: "project-booking-typescript",
     entities: [
-        "src/entity/entity.ts"
+        "src/entity/entities.ts"
     ],
     logging: false,
     synchronize: true,

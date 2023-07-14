@@ -20,6 +20,12 @@ export class Book {
     publicationDate: Date;
 
     @Column({ type: 'decimal', precision: 10, scale: 2 })
+    purchasePrice: number;
+
+    @Column({ type: 'decimal', precision: 10, scale: 2 })
+    rentalPrice: number;
+
+    @Column({ type: 'decimal', precision: 10, scale: 2 })
     price: number;
 
     @Column({ nullable: true })
