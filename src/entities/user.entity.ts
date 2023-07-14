@@ -1,5 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToMany, JoinTable} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToMany, JoinTable, OneToMany} from 'typeorm';
+
 import {UserType} from "./userType.entity";
+import {Booking} from "./booking.entity";
+import {Renting} from "./renting.entity";
+import {Purchase} from "./purchase.entity";
 
 @Entity()
 export class User {
@@ -33,6 +37,15 @@ export class User {
     @ManyToMany(() => UserType)
     @JoinTable()
     userTypes: UserType[];
+
+    @OneToMany(() => Booking, booking => booking.user)
+    bookings: Booking[];
+
+    @OneToMany(() => Renting, renting => renting.user)
+    rentings: Renting[];
+
+    @OneToMany(() => Purchase, purchase => purchase.user)
+    purchases: Purchase[];
 
     @BeforeInsert()
     validateData() {
