@@ -3,6 +3,7 @@ import { Book } from '../entities/book.entity';
 import { Purchase } from '../entities/purchase.entity';
 import { Renting } from '../entities/renting.entity';
 import {AppDataSource} from "../../ormconfig";
+import {BookFile} from "../entities/bookFile.entity";
 
 /**
  * Controller for handling book-related operations.
@@ -11,6 +12,7 @@ export class BookController {
     private bookRepository = AppDataSource.getRepository(Book);
     private purchaseRepository = AppDataSource.getRepository(Purchase);
     private rentingRepository = AppDataSource.getRepository(Renting);
+    private fileRepository = AppDataSource.getRepository(BookFile);
 
     /**
      * Creates a new book.
@@ -33,6 +35,15 @@ export class BookController {
 
             // Save the book to the database
             const savedBook = await this.bookRepository.save(book);
+
+            if (req.file) {
+                const fileId = req.file.id; // assuming the file ID is included in the request
+                const file = await this.fileRepository.findOne({ where: { id: fileId } });
+                if (file) {
+                    savedBook.file = file;
+                    await this.bookRepository.save(savedBook);
+                }
+            }
 
             res.status(201).json(savedBook);
         } catch (error) {
