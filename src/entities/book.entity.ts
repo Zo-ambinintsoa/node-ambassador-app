@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'ty
 import {Booking} from "./booking.entity";
 import {Renting} from "./renting.entity";
 import {Purchase} from "./purchase.entity";
-import {File} from "./file.entity";
+import {BookFile} from "./bookFile.entity";
 import {Author} from "./author.entity";
 
 @Entity()
@@ -44,6 +44,6 @@ export class Book {
     @OneToMany(() => Purchase, purchase => purchase.book)
     purchases: Purchase[];
 
-    @OneToMany(() => File, file => file.book)
-    files: File[];
+    @OneToMany(() => BookFile, bookFile => bookFile.book)
+    bookFiles: BookFile[];
 }

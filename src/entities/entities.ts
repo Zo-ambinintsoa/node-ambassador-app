@@ -5,8 +5,8 @@ import {User} from "./user.entity";
 import {UserType} from "./userType.entity";
 import {Author} from "./author.entity";
 import {Purchase} from "./purchase.entity";
-import {File} from "./file.entity";
+import {BookFile} from "./bookFile.entity";
 import {Permission} from "./permission.entity";
 
 
-export default [Book, Renting, Booking, Purchase, User, UserType, Author, File, Permission];
+export default [Book, Renting, Booking, Purchase, User, UserType, Author, BookFile, Permission];

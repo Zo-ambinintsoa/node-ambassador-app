@@ -1,4 +1,4 @@
-import {authenticatedUser, Login, Logout, Register, UpdateInfo, UpdatePassword} from "./controller/auth.controller";
+import { UserController } from "./controller/auth.controller";
 import {Request, Response, Router} from "express";
 import {BookController} from "./controller/book.controller";
 
@@ -7,28 +7,48 @@ export const routes = (router: Router) => {
     /**
      * User Authentication Routes
      */
-    router.post('/api/register', Register);
-    router.post('/api/login', Login);
-    router.get('/api/user', authenticatedUser);
-    router.post('/api/logout', Logout);
-    router.put('/api/user/update', UpdateInfo);
-    router.put('/api/user/update/password', UpdatePassword);
+    const userController = new UserController();
 
-    const bookController = new BookController()
+    // Register a new user
+        router.post('/register',  userController.register);
+
+    // Login and generate JWT token
+        router.post('/login',  userController.login);
+
+    // Get authenticated user's information
+        router.get('/authenticated-user',  userController.authenticatedUser);
+
+    // Update user's information
+        router.put('/update-info',  userController.updateInfo);
+
+    // Update user's password
+        router.put('/update-password',  userController.updatePassword);
+
+    // Logout user
+        router.post('/logout', userController.logout);
 
     /**
      * routes for books
      */
-    router.post('/books', bookController.createBook);
+    const bookController = new BookController();
 
-    router.get('/books/:bookId', bookController.getBook);
+    // Create a new book
+        router.post('/books', bookController.createBook);
 
-    router.put('/books/:bookId', bookController.updateBook);
+    // Get a book by ID
+        router.get('/books/:bookId', bookController.getBook);
 
-    router.delete('/books/:bookId', bookController.deleteBook);
+    // Update a book
+        router.put('/books/:bookId', bookController.updateBook);
 
-    router.post('/books/:bookId/purchase', bookController.purchaseBook);
+    // Delete a book
+        router.delete('/books/:bookId', bookController.deleteBook);
 
-    router.post('/books/:bookId/rent', bookController.rentBook);
+    // Purchase a book
+        router.post('/books/:bookId/purchase', bookController.purchaseBook);
+
+    // Rent a book
+        router.post('/books/:bookId/rent', bookController.rentBook);
+
 
 }

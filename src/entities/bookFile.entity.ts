@@ -3,11 +3,11 @@ import {Book} from "./book.entity";
 
 
 @Entity()
-export class File {
+export class BookFile {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Book, book => book.files)
+    @ManyToOne(() => Book, book => book.bookFiles)
     book: Book;
 
     @Column()

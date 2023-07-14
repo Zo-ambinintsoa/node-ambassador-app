@@ -4,11 +4,21 @@ import { Purchase } from '../entities/purchase.entity';
 import { Renting } from '../entities/renting.entity';
 import {AppDataSource} from "../../ormconfig";
 
+/**
+ * Controller for handling book-related operations.
+ */
 export class BookController {
     private bookRepository = AppDataSource.getRepository(Book);
     private purchaseRepository = AppDataSource.getRepository(Purchase);
     private rentingRepository = AppDataSource.getRepository(Renting);
 
+    /**
+     * Creates a new book.
+     *
+     * @param req - The Express Request object.
+     * @param res - The Express Response object.
+     * @returns The created book.
+     */
     async createBook(req: Request, res: Response) {
         try {
             const { title, authorId, publicationDate, purchasePrice, rentalPrice } = req.body;
@@ -31,9 +41,16 @@ export class BookController {
         }
     }
 
+    /**
+     * Retrieves a book by ID.
+     *
+     * @param req - The Express Request object.
+     * @param res - The Express Response object.
+     * @returns The retrieved book.
+     */
     async getBook(req: Request, res: Response) {
         try {
-            const id  = parseInt(req.params.id as string | '0');
+            const id  = parseInt(req.params.bookId as string);
 
             // Find the book by its ID
             const book = await this.bookRepository.findOne({ where: { id }, relations: { author: true } });
@@ -49,9 +66,16 @@ export class BookController {
         }
     }
 
+    /**
+     * Updates a book.
+     *
+     * @param req - The Express Request object.
+     * @param res - The Express Response object.
+     * @returns The updated book.
+     */
     async updateBook(req: Request, res: Response) {
         try {
-            const id  = parseInt(req.params.id as string | '0');
+            const id  = parseInt(req.params.bookId);
             const { title, authorId, publicationDate, purchasePrice, rentalPrice } = req.body;
 
             // Find the book by its ID
@@ -78,9 +102,17 @@ export class BookController {
         }
     }
 
+
+    /**
+     * Deletes a book.
+     *
+     * @param req - The Express Request object.
+     * @param res - The Express Response object.
+     * @returns A success message.
+     */
     async deleteBook(req: Request, res: Response) {
         try {
-            const id  = parseInt(req.params.id as string | '0');
+            const id  = parseInt(req.params.bookId);
 
             // Find the book by its ID
             const book = await this.bookRepository.findOne({ where: { id }, relations: { author: true } });
@@ -99,6 +131,13 @@ export class BookController {
         }
     }
 
+    /**
+     * Purchases a book.
+     *
+     * @param req - The Express Request object.
+     * @param res - The Express Response object.
+     * @returns The created purchase.
+     */
     async purchaseBook(req: Request, res: Response) {
         try {
             const { userId, bookId } = req.body;
@@ -126,6 +165,13 @@ export class BookController {
         }
     }
 
+    /**
+     * Rents a book.
+     *
+     * @param req - The Express Request object.
+     * @param res - The Express Response object.
+     * @returns The created renting.
+     */
     async rentBook(req: Request, res: Response) {
         try {
             const { userId, bookId, startDate, returnDate } = req.body;
@@ -155,7 +201,4 @@ export class BookController {
             res.status(500).json({ message: 'Internal Server Error' });
         }
     }
-
-    // ... add other methods as needed
-
 }
