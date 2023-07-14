@@ -7,7 +7,7 @@ const dbConfig = {
     port: 3306,
     username: "admin",
     password: "zobest",
-    database: "projet-typescript",
+    database: "project-booking-typescript",
     entities: [
         "src/entity/entity.ts"
     ],
