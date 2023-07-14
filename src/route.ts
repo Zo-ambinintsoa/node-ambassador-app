@@ -1,6 +1,7 @@
 import { UserController } from "./controller/auth.controller";
-import {Request, Response, Router} from "express";
+import { Router } from "express";
 import {BookController} from "./controller/book.controller";
+import {AuthorController} from "./controller/author.controller";
 
 export const routes = (router: Router) => {
 
@@ -50,5 +51,32 @@ export const routes = (router: Router) => {
     // Rent a book
         router.post('/books/:bookId/rent', bookController.rentBook);
 
+
+    const authorController = new AuthorController();
+
+    /**
+     * Create a new author.
+     */
+    router.post('/authors', authorController.createAuthor);
+
+    /**
+     * Retrieve an author by ID.
+     */
+    router.get('/authors/:id', authorController.getAuthor);
+
+    /**
+     * Update an author.
+     */
+    router.put('/authors/:id', authorController.updateAuthor);
+
+    /**
+     * Delete an author.
+     */
+    router.delete('/authors/:id', authorController.deleteAuthor);
+
+    /**
+     * Retrieve books by author ID.
+     */
+    router.get('/authors/:id/books', authorController.getAuthorBooks);
 
 }
