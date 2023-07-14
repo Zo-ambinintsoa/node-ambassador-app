@@ -36,15 +36,6 @@ export class BookController {
             // Save the book to the database
             const savedBook = await this.bookRepository.save(book);
 
-            if (req.file) {
-                const fileId = req.file.id; // assuming the file ID is included in the request
-                const file = await this.fileRepository.findOne({ where: { id: fileId } });
-                if (file) {
-                    savedBook.file = file;
-                    await this.bookRepository.save(savedBook);
-                }
-            }
-
             res.status(201).json(savedBook);
         } catch (error) {
             console.error('Error creating book:', error);
