@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToMany, JoinTable, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, JoinTable, OneToMany, ManyToOne} from 'typeorm';
 
 import {UserType} from "./userType.entity";
 import {Booking} from "./booking.entity";
@@ -34,9 +34,9 @@ export class User {
     @Column({ nullable: true })
     picture: string;
 
-    @ManyToMany(() => UserType)
+    @ManyToOne(() => UserType)
     @JoinTable()
-    userTypes: UserType[];
+    userTypes: UserType;
 
     @OneToMany(() => Booking, booking => booking.user)
     bookings: Booking[];

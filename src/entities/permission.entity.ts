@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany} from 'typeorm';
 import {UserType} from "./userType.entity";
 
 @Entity()
@@ -13,9 +13,8 @@ export class Permission {
     permissionType: string;
 
     @Column()
-    modelTypes: string[];
+    modelTypes: string;
 
     @ManyToMany(() => UserType)
-    @JoinTable()
     userTypes: UserType[];
 }
